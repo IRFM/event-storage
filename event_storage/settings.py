@@ -32,17 +32,9 @@ class Settings(BaseSettings):
         if isinstance(v, str):
             return v
         data = values.data
-        use_sqlite = data.get("SQLITE", False)  # explicit False, not True
-        if use_sqlite:
+        if data.get("SQLITE", False):
             return f"sqlite:///{data.get('SQLITE_DATABASE_FILE')}"
-        # Validate that all MySQL fields are present before assembling URI
-        required = ("MYSQL_USER", "MYSQL_PASSWORD", "MYSQL_HOST", "MYSQL_DATABASE")
-        missing = [k for k in required if not data.get(k)]
-        if missing:
-            raise ValueError(
-                f"SQLITE=false but the following MySQL settings are missing: {missing}. "
-                "Set SQLITE=true or provide all MySQL connection parameters."
-            )
+
         return (
             f"mysql+pymysql://{data['MYSQL_USER']}:{data['MYSQL_PASSWORD']}"
             f"@{data['MYSQL_HOST']}/{data['MYSQL_DATABASE']}"
