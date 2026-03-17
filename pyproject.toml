@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "event-storage"
+version = "1.0.0"
+description = "SQLAlchemy-based database system for managing fusion reactor diagnostic events, annotations, and metadata."
+authors = ["Erwan Grelier <erwan.grelier@cea.fr>", "Leo Dubus <leo.dubus@cea.fr>", "Victor Moncada <victor.moncada@cea.fr>"]
+readme = "README.md"
+packages = [{include = "event_storage"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+sqlalchemy = "^2.0.0"
+numpy = "^1.23.4"
+opencv-python = "^4.6.0.66"
+marshmallow-sqlalchemy = "^0.28.1"
+pydantic = "^2.8.2"
+pydantic-settings = "^2.3.4"
+pymysql = "^1.0.2"
+cryptography = "^41.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+black = "^23.0.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+mypy = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:Object of type .* not in session:sqlalchemy.exc.SAWarning",
+]
