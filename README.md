@@ -1,6 +1,6 @@
 # event_storage: Fusion Diagnostics Event Storage System
 
-[![Python package](https://github.com/IRFM/event-storage/actions/workflows/python-package.yml/badge.svg)](https://github.com/IRFM/event-storage/actions/workflows/python-package.yml)
+[![pytest](https://github.com/IRFM/event-storage/actions/workflows/python-package.yml/badge.svg)](https://github.com/IRFM/event-storage/actions/workflows/python-package.yml)
 
 A SQLAlchemy-based storage library for managing events detected or annotated on experimental signals, designed for fusion/tokamak diagnostics.
 
