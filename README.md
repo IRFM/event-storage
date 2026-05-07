@@ -18,8 +18,17 @@ Signal ──< EventSpan >── Event
 ```
 
 ## Installation
+
+For regular use:
+
 ```bash
 pip install -e .
+```
+
+For development, including test and lint tools:
+
+```bash
+pip install -e .[dev]
 ```
 
 ## Configuration
@@ -158,6 +167,15 @@ Event.write_events_to_json("events.json", events)
 ```
 
 ## Testing
+
+Install the development dependencies first:
+
+```bash
+pip install -e ".[dev]"
+```
+
+Run the tests:
+
 ```bash
 pytest tests/ -v
 ```

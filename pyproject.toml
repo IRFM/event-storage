@@ -1,34 +1,46 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "event-storage"
 version = "1.0.0"
 description = "SQLAlchemy-based database system for managing fusion reactor diagnostic events, annotations, and metadata."
-authors = ["Erwan Grelier <erwan.grelier@cea.fr>", "Leo Dubus <leo.dubus@cea.fr>", "Victor Moncada <victor.moncada@cea.fr>"]
+authors = [
+  {name = "Erwan Grelier", email = "erwan.grelier@cea.fr"},
+  {name = "Leo Dubus", email = "leo.dubus@cea.fr"},
+  {name = "Victor Moncada", email = "victor.moncada@cea.fr"}
+  ]
 readme = "README.md"
-packages = [{include = "event_storage"}]
+requires-python = ">=3.11"
+dependencies = [
+    "sqlalchemy>=2.0.0,<3.0.0",
 
-[tool.poetry.dependencies]
-python = "^3.11"
-sqlalchemy = "^2.0.0"
-numpy = "^1.23.4"
-opencv-python = "^4.6.0.66"
-marshmallow-sqlalchemy = "^0.28.1"
-pydantic = "^2.8.2"
-pydantic-settings = "^2.3.4"
-pymysql = "^1.0.2"
-cryptography = "^41.0.0"
+    # numpy conditional on Python version
+    "numpy>=1.23.4,<2.0.0; python_version < '3.13'",
+    "numpy>=2.1.0,<3.0.0; python_version >= '3.13'",
 
+    "opencv-python>=4.6.0.66,<5.0.0",
+    "marshmallow-sqlalchemy>=0.28.1,<1.0.0",
+    "pydantic>=2.8.2,<3.0.0",
+    "pydantic-settings>=2.3.4,<3.0.0",
+    "pymysql>=1.0.2,<2.0.0",
+    "cryptography>=41.0.0,<42.0.0",
+]
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-black = "^23.0.0"
-isort = "^5.12.0"
-flake8 = "^6.0.0"
-mypy = "^1.0.0"
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0,<8.0.0",
+    "pytest-cov>=4.1.0,<5.0.0",
+    "black>=23.0.0,<24.0.0",
+    "isort>=5.12.0,<6.0.0",
+    "flake8>=6.0.0,<7.0.0",
+    "mypy>=1.0.0,<2.0.0",
+    "ipykernel>=7.2.0,<8.0.0",
+]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.setuptools.packages.find]
+include = ["event_storage*"]
 
 [tool.pytest.ini_options]
 filterwarnings = [
