@@ -12,29 +12,3 @@ from .reference import (
     Signal,
     Status,
 )
-
-__all__ = [
-    # Reference models
-    "Signal",
-    "AnnotationType",
-    "MetadataType",
-    "Criticality",
-    "Method",
-    "Status",
-    "Category",
-    # Event models
-    "Event",
-    "EventSpan",
-    # Annotation models
-    "Annotation",
-    "Annotation2D",
-    "Annotation3D",
-    # Metadata models
-    "Metadata",
-    "MetadataIR",
-    "MetadataPulse",
-    # Processing status
-    "ProcessingStatus",
-    # Dataset
-    "Dataset",
-]
