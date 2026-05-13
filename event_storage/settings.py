@@ -1,7 +1,8 @@
 from pathlib import Path
 from typing import Optional
+import warnings
 
-from pydantic import ValidationInfo, field_validator
+from pydantic import ValidationInfo, model_validator, field_validator
 from pydantic_settings import BaseSettings
 from pydantic_settings import SettingsConfigDict
 
@@ -11,7 +12,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(
         case_sensitive=True,
-        env_file=(str(Path.home() / ".env.default"), ".env"),
+        env_file=(".env.example", str(Path.home() / ".env.default"), ".env"),
         extra="ignore",
     )
 
@@ -25,6 +26,29 @@ class Settings(BaseSettings):
     SQLITE: bool = False
     SQLITE_DATABASE_FILE: str = "database.db"
     DATABASE_URI: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def warn_if_only_example_env_exists(cls, data):
+        env_files = cls.model_config["env_file"]
+
+        existing = [
+            Path(path).expanduser()
+            for path in env_files
+            if Path(path).expanduser().is_file()
+        ]
+
+        if [path.name for path in existing] == [".env.example"]:
+            warnings.warn(
+                f"Only the example dotenv file ({existing[0].resolve()}) was found. "
+                "If matching environment variables are set, they take precedence and "
+                ".env.example may not affect the active configuration. To avoid "
+                "ambiguity, create a real .env or ~/.env.default file, or remove "
+                ".env.example.",
+                RuntimeWarning,
+            )
+
+        return data
 
     @field_validator("DATABASE_URI", mode="before")
     def assemble_db_connection(
